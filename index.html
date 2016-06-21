@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2016 by zhzhang (http://jsbin.com/patuyod/562/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,100,700,300" />
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/zenburn.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.2.1/hint.css" />
+  <link rel="stylesheet" href="http://rawgit.com/getdecoded/debut/master/dist/debut.min.css" />
+  <link rel="stylesheet" href="presentation.css" />
+  <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+  $$\newcommand{\bra}[1]{\langle #1 \lvert}$$
+  $$\newcommand{\ket}[1]{\rvert #1 \rangle}$$
+  $$\DeclareMathOperator{\tr}{Tr}$$
+</head>
+<body>
+<div class="presentation">
+  <div class="full-slide title-slide">
+    <h1 class="disappear">
+      Density Matrices for
+    </h1>
+    <h1 class="entailment-title">
+      Lexical Entailment
+    </h1>
+    <div class="disappear">
+      21st June, 2016
+      <br>
+      Zhuoran (Jordan) Zhang, Laura Rimell, and Tamara Polajnar
+      <br>
+      MPhil in Advanced Computer Science
+      <br>
+      <br>
+      <img src="figures/uni_logo.png"/>
+    </div>
+    <div class="content entailment">
+      <div class="hypernym">Hypernymy</div>
+      <div class="disappear2">Meronymy</div>
+      <div class="disappear2">Attribute</div>
+      <div class="disappear2">Causality</div>
+    </div>
+    <div class="content entail-example">
+      <div>An <span class="hypo">apple</span> is a <span class="hyper">fruit</span>.</div>
+      <div class="example fruits">I ate the <span class="hypo apple">apple</span><span class="hyper fruit">fruit</span>.</div>
+      <div class="dih">
+        <p>Distributional Inclusion Hypothesis*</p>
+        <p class="dih-def">A word \(v\) entails another word \(w\) iff all of the <em>characteristic features</em> of \(v\) are expected to appear with \(w\).</p>
+      </div>
+    </div>
+    <div class="footnote">*Maayan Geffet and Ido Dagan. 2005. The distributional inclusion hypotheses and lexical entailment.</div>
+  </div>
+
+  <div class="full-slide vsms">
+    <h1 class="top">
+      Vector Space Models
+    </h1>
+    <div class="goldfish-ex">
+      <div class="content">
+        <div class="example vsm">My pet fish is a <span class="target goldfish hint--top" data-hint="TARGET WORD">goldfish</span>.</div>
+        <div class="example vsm">The <span class="target">goldfish</span> lives in the aquarium.</div>
+      </div>
+      <div class="vectors">
+        <div>\(\begin{bmatrix}pet&fish&aquarium\end{bmatrix}\)</div>
+        <div>\(\begin{bmatrix}1&1&0\end{bmatrix}\)</div>
+        <div>\(\begin{bmatrix}0&0&1\end{bmatrix}\)</div>
+        <div>\(\downarrow\)</div>
+        <div>\(\begin{bmatrix}1&1&1\end{bmatrix}\)</div>
+      </div>
+    </div>
+
+    <div class="cat-ex">
+      <div class="content">
+        <div class="example vsm">The <span class="target">cat</span> ate the fish.</div>
+        <div class="example vsm">I have a pet <span class="target">cat</span>.</div>
+      </div>
+      <div class="vectors">
+        <div>\(\begin{bmatrix}pet&fish&aquarium\end{bmatrix}\)</div>
+        <div>\(\begin{bmatrix}0&1&0\end{bmatrix}\)</div>
+        <div>\(\begin{bmatrix}1&0&0\end{bmatrix}\)</div>
+        <div>\(\downarrow\)</div>
+        <div>\(\begin{bmatrix}1&1&0\end{bmatrix}\)</div>
+      </div>
+    </div>
+    <div class="goldfish-vec">goldfish: \(\begin{bmatrix}1&1&1\end{bmatrix}\)</div>
+  </div>
+
+  <div class="full-slide balkir">
+    <h1 class="top">
+      Density Matrices
+    </h1>
+    <div class="content example outer-prod">My pet fish is a <span class="target">goldfish</span>. \(\rightarrow\begin{bmatrix}1\\1\\0\end{bmatrix}\cdot\begin{bmatrix}1&1&0\end{bmatrix}=\begin{bmatrix}1&1&0\\1&1&0\\0&0&0\end{bmatrix}\)</div>
+    <div class="example balkir-matrices centered">
+      <div>\(\rho_{goldfish} = \begin{bmatrix}1&1&0\\1&1&0\\0&0&1\end{bmatrix}\)</div>
+      <br>
+      <div>\(\rho_{cat} = \begin{bmatrix}1&0&0\\0&1&0\\0&0&0\end{bmatrix}\)</div>
+    </div>
+    <div class="subspace-img-container">
+      <img src="figures/overlap-tmp.png"/>
+      <div class="distinguishing hint--bottom" data-hint="Distinguishing Context"></div>
+    </div>
+    <div class="footnote">Example and figures taken from : Esma Balkir, Dimitri Kartsaklis, and Mehrnoosh Sadrzadeh. 2015. Sentence entailment in compositional distributional semantics.</div>
+
+    <div class="eigendecomp">
+      Target Word: <span class="target example">apple</span><br>
+      <strong>Eigenvalue #1: 0.049</strong><br>
+      ii used use big introduced ibm cultivar microsoft discord apple<br>
+      <strong>Eigenvalue #6: 0.018</strong><br>
+      trees pear cherry tree peach plum orchard orchards apricot oak <br>
+      <strong>Eigenvalue #8: 0.017</strong><br>
+      macintosh products logo trees orange peach pear cherry apple microsoft <br>
+    </div>
+
+    <div class="repres">
+      Representativeness<br>
+      $$R(\rho_{x}||\rho_{y}) = \frac{1}{1+S(\rho_{x}||\rho_{y})}$$
+      <div class="entropy hint--bottom" data-hint="von Neumann Entropy">
+      $$S(\rho_{x}||\rho_{y}) = \tr{\rho_{x}\log\rho_{x}} - \tr{\rho_{x}\log\rho_{y}}$$
+      </div>
+    </div>
+  </div>
+
+  <div class="full-slide generation">
+    <h1 class="top">
+      Matrix Generation
+    </h1>
+    <div class="content">
+      <table>
+        <tr>
+          <th>0,0</th>
+          <th>0,1</th>
+          <th class="datacell hint--right" data-hint="ALLIGATOR: 8, BANANA: 2, ...">0,2</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>1,1</th>
+          <th>1,2</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>2,2</th>
+        </tr>
+      </table>
+      <br>
+      <table>
+        <tr>
+          <th class="datacell hint--bottom" data-hint="(3,3): 1, (4,5): 1, ...">ALLIGATOR</th>
+          <th>BANANA</th>
+          <th>...</th>
+        </tr>
+      </table>
+    </div>
+    <div class="pgfs">
+      $$\left[\begin{array}{ccc|c}25&15&10&5\\15&9&6&3\\10&6&4&2\\\hline5&3&2&1\end{array}\right]$$
+    </div>
+  </div>
+
+  <div class="full-slide main-results">
+    <h1 class="top">
+      Results
+    </h1>
+    <div class="left-panel">
+      Hypernymy Direction<br>
+      \(alligator\xrightarrow{?}reptile\)
+      \(dishwasher\xrightarrow{?}appliance\)
+      <br>
+      <br>
+      <strong>57.2% Accuracy</strong>
+      <br>
+      <br>
+      Data Set: Baroni and Lenci Evaluation of Semantic Spaces (BLESS)
+    </div>
+    <div class="right-panel">
+      Hypernymy Precision
+      <br>
+      Random Hypernyms<br>
+      \(alligator\xrightarrow{?}rectifier\)
+      <br>
+      <strong>61.9% Precision</strong>
+      <br>
+      <br>
+      Shuffled Hypernyms<br>
+      \(alligator\xrightarrow{?}appliance\)
+      \(dishwasher\xrightarrow{?}reptile\)
+      <br>
+      <strong>61.7% Precision</strong>
+    </div>
+  </div>
+
+  <div class="full-slide weeds">
+    <h1 class="top">
+      Other Measures
+    </h1>
+    <div class="left-panel">
+      <br>
+      \(WeedsPrec(x,y) = \frac{\sum\limits_{c\in F(x)\cap F(y)}w(c,x)}{\sum\limits_{c\in F(x)}w(c,x)}\)
+      <br>
+      <br>
+      <br>
+      <table>
+        <tr>
+          <th>x</th>
+          <th class="overlap">3</th>
+          <th>0</th>
+          <th>0</th>
+          <th class="overlap">2</th>
+          <th>5</th>
+        </tr>
+        <tr>
+          <th>y</th>
+          <th class="overlap">2</th>
+          <th>3</th>
+          <th>8</th>
+          <th class="overlap">4</th>
+          <th>0</th>
+        </tr>
+      </table>
+    </div>
+    <div class="right-panel">
+      <br>
+      \(WeedsPrec_{quantum}(x,y)\)<br>
+      \(= \sum_{i\in I_{y,+}}\bra{y_{i}}\rho_{x}\ket{y_{i}}\)
+      <br>
+      <br>
+      <img src="figures/intersection.png"/>
+    </div>
+  </div>
+
+  <div class="full-slide other-results">
+    <h1 class="top">
+      Results
+    </h1>
+    <div class="centered">
+      Average Precision, BLESS hypernyms vs. BLESS noun-pairs
+      <table>
+        <tr>
+          <th>Measure</th>
+          <th>Our Best</th>
+          <th>Lenci '12</th>
+        </tr>
+        <tr>
+          <th>WeedsPrec</th>
+          <th>19.6</th>
+          <th>40</th>
+        </tr>
+        <tr>
+          <th>ClarkeDE</th>
+          <th>22.0</th>
+          <th>39</th>
+        </tr>
+        <tr>
+          <th>invCL</th>
+          <th>23.0</th>
+          <th>40</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="concl">
+    <h1 class="top">
+      Conclusions
+    </h1>
+    <div class="content">
+      <ul>
+        <li>Can be used as a distributional semantic model.</li>
+        <li>Can encode disparate contexts.</li>
+        <li>Springboard for future research.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="final">
+    <h1 class="top">
+      Acknowledgements
+    </h1>
+    <div class="content">
+      Laura Rimell and Tamara Polajnar for encouraging me throughout the project, and teaching me how to be a better researcher.
+      <br>
+      <br>
+      Esma Balkir for her email correspondence about her theoretical work.
+    </div>
+  </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js"></script>
+
+<script src="http://rawgit.com/getdecoded/debut/master/dist/debut.min.js"></script>
+<script src="presentation.js"></script>
+</body>
+</html>
